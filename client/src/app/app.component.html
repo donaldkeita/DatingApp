@@ -1,0 +1,11 @@
+<!-- Directives are classes that add additional behavior to elements in your angular applications.
+     - Structural directives are directives which change the DOM layout by adding and removing DOM elements.
+       e.g: *ngFor - structural directive -->
+
+<!-- jQuery - a library that manipulates DOM (Document Object Model) -->
+
+<h1>{{title}}</h1>
+
+<ul>
+    <li *ngFor='let user of users'>{{user.id}} - {{user.userName}}</li>
+</ul>
