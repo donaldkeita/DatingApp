@@ -27,7 +27,7 @@ namespace API.Services
 
             // credentials
               // security algorithms (e.g: HmacSha256Signature) will encrypt our signature in the third part of the token
-              // signature is encrypted by the server using a secure tha never leaves the server.
+              // signature is encrypted by the server using a secure that key never leaves the server.
             var creds = new SigningCredentials(_key, SecurityAlgorithms.HmacSha256Signature);
 
             // describe our token  => PAYLOAD: DATA

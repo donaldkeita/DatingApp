@@ -51,7 +51,7 @@ namespace API.Controllers
 
 
         [HttpPost("login")]
-        public async Task<ActionResult<AppUser>> Login(LoginDTO loginDTO)
+        public async Task<ActionResult<UserDTO>> Login(LoginDTO loginDTO)
         {
             var user = await _context.Users.SingleOrDefaultAsync(x => x.UserName == loginDTO.Username);
 
@@ -64,7 +64,11 @@ namespace API.Controllers
             for (int i = 0; i < computedHash.Length; i++)
                 if (computedHash[i] != user.PasswordHash[i]) return Unauthorized();
 
-            return user;
+            return new UserDTO
+            {
+                UserName = user.UserName,
+                Token = _tokenService.CreateToken(user)
+            };
         }
 
         // dotnet tool install --global dotnet-ef --version 6.0.10

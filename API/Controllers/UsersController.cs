@@ -1,5 +1,6 @@
 ﻿using API.Data;
 using API.Entities;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
@@ -14,14 +15,16 @@ namespace API.Controllers
         {
             _context = context;
         }
-
+        
         [HttpGet]
+        [AllowAnonymous]
         public async Task<ActionResult<IEnumerable<AppUser>>> GetUsers()
         {
             return await _context.Users.ToListAsync();
 
         }
 
+        [Authorize]        // ensure our endpoint is protected with authentication, then GetUser endpoint is protected
         // api/users/3
         [HttpGet("{id}")]  // id : route parameter
         public async Task<ActionResult<AppUser>> GetUser(int id)
