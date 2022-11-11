@@ -11,6 +11,7 @@ import { User } from '../_models/user';
 export class AccountService {
 
   baseUrl = 'https://localhost:5001/api/';
+  // ReplaySubject - a type of observable. A kind of buffer object that stores values 
   private currentUserSource = new ReplaySubject<User>(1);
   currentUser$ = this.currentUserSource.asObservable();
 
@@ -39,6 +40,18 @@ export class AccountService {
   logout() {
     localStorage.removeItem('user');
     this.currentUserSource.next(null);
+  }
+
+  register(model : any) {
+    return this.http.post(this.baseUrl + 'account/register', model).pipe(
+      map((user: User) => {
+        //const user = response;
+        if (user) {
+          localStorage.setItem('user', JSON.stringify(user));
+          this.currentUserSource.next(user);
+        }
+      })
+    )
   }
 
 }

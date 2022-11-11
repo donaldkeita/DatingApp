@@ -1,39 +1,35 @@
 import { Component, OnInit } from '@angular/core';
 import { userInfo } from 'os';
 import { nextTick } from 'process';
+import { Observable } from 'rxjs';
+import { User } from '../_models/user';
 import { AccountService } from '../_services/account.service';
+
 
 @Component({
   selector: 'app-nav',
   templateUrl: './nav.component.html',
   styleUrls: ['./nav.component.css']
 })
+
+
 export class NavComponent implements OnInit {
 
   model:any = {}
-  loggedIn: boolean;
+  // currentUser$: Observable<User>;   //loggedIn: boolean;
 
-  constructor(private accountService: AccountService) { }
+  // constructor
+  constructor(public accountService: AccountService) {
+   }
 
-  ngOnInit(): void {
-    this.getCurrentUser();
+  ngOnInit(): void {   
+    // this.currentUser$ = this.accountService.currentUser$;     //  this.getCurrentUser();
   }
-
-  // Observable is lazy. It does not do anything until you subscribe
-  // login() {
-  //   this.accountService.login(this.model).subscribe(response => {
-  //     console.log(response); // log : Prints to stdout with newline.
-  //     this.loggedIn = true;
-  //   }, error => {
-  //     console.log(error);
-  //   })
-  // }
 
   login() {
     this.accountService.login(this.model).subscribe({
       next: (v) => { 
-        console.log(v), 
-        this.loggedIn = true
+        console.log(v) 
       },
       error: (e) => { console.error(e) }
     })
@@ -42,24 +38,17 @@ export class NavComponent implements OnInit {
   
   logout() {
     this.accountService.logout();
-    this.loggedIn = false;
+    // this.loggedIn = false;
   }
 
 
   // !! - turns object into a boolean
   // e.g: !!user - if user is null, that means it is false; otherwise it is true
-  getCurrentUser() {
-    this.accountService.currentUser$.subscribe({
-      next: (v) => this.loggedIn = !!v,
-      error: (e) => console.error(e)
-    })
-   }
-
   // getCurrentUser() {
-  //     this.accountService.currentUser$.subscribe({
-  //       next: (v) => console.log(v),        // log : Prints to stdout with newline.  
-  //       error: (e) => console.error(e)
-  //     })
-  //   }
+  //   this.accountService.currentUser$.subscribe({
+  //     next: (v) => this.loggedIn = !!v,
+  //     error: (e) => console.error(e)
+  //   })
+  //  }
 
 }
