@@ -1,4 +1,7 @@
 import { Component, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { timeStamp } from 'console';
+import { ToastrService } from 'ngx-toastr';
 import { userInfo } from 'os';
 import { nextTick } from 'process';
 import { Observable } from 'rxjs';
@@ -19,7 +22,7 @@ export class NavComponent implements OnInit {
   // currentUser$: Observable<User>;   //loggedIn: boolean;
 
   // constructor
-  constructor(public accountService: AccountService) {
+  constructor(public accountService: AccountService, private router: Router, private toastr: ToastrService) {
    }
 
   ngOnInit(): void {   
@@ -29,15 +32,19 @@ export class NavComponent implements OnInit {
   login() {
     this.accountService.login(this.model).subscribe({
       next: (v) => { 
-        console.log(v) 
+        this.router.navigateByUrl('/members');
       },
-      error: (e) => { console.error(e) }
+      // the http response message is contained in the error. But the error message is contained inside
+      // the error property
+      error: (e) => { console.error(e); 
+                      this.toastr.error(e.error)}
     })
   }
 
   
   logout() {
     this.accountService.logout();
+    this.router.navigateByUrl('/');
     // this.loggedIn = false;
   }
 
