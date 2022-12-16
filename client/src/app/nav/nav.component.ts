@@ -36,8 +36,8 @@ export class NavComponent implements OnInit {
       },
       // the http response message is contained in the error. But the error message is contained inside
       // the error property
-      error: (e) => { console.error(e); 
-                      this.toastr.error(e.error)}
+      // error: (e) => { console.error(e); 
+      //                 this.toastr.error(e.error)}
     })
   }
 

@@ -24,6 +24,7 @@ namespace API.Controllers
 
         }
 
+
         [Authorize]        // ensure our endpoint is protected with authentication, then GetUser endpoint is protected
         // api/users/3
         [HttpGet("{id}")]  // id : route parameter
