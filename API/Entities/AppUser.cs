@@ -22,7 +22,7 @@ namespace API.Entities
         public List<Photo> Photos { get; set; } = new();
 
 
-        public int GetAge() { return DateOfBirth.CalculateAge(); }
+        //public int GetAge() { return DateOfBirth.CalculateAge(); }
 
         // DateOfBirth = CalculateAge(DateOfBirth);    <===>    DateOfBirth.CalculateAge()
     }

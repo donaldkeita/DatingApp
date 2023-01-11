@@ -11,23 +11,6 @@ using API.Extensions;
 using API.Data;
 using Microsoft.EntityFrameworkCore;
 
-//namespace API
-//{
-//    public class Program
-//    {
-//        public static void Main(string[] args)
-//        {
-//            CreateHostBuilder(args).Build().Run();
-//        }
-
-//        public static IHostBuilder CreateHostBuilder(string[] args) =>
-//            Host.CreateDefaultBuilder(args)
-//                .ConfigureWebHostDefaults(webBuilder =>
-//                {
-//                    webBuilder.UseStartup<Startup>();
-//                });
-//    }
-//}
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -41,15 +24,19 @@ builder.Services.AddIdentityServices(builder.Configuration);
 var app = builder.Build();
 
 
-//  Configure the HTTP pipeline
+//------------------  Configure the HTTP pipeline  --------------------------
 
+//   1. ExceptionHandler
 app.UseMiddleware<ExceptionMiddleware>();
 
+// 6. CORS (Cross-Origin Resource Sharing)
 app.UseCors(builder => builder.AllowAnyHeader().AllowAnyMethod()
     .WithOrigins("https://localhost:4200"));  // x stand for policy
 
+// 7. Authentication
 app.UseAuthentication();
 
+// 8. Authorization
 app.UseAuthorization();
 
 app.MapControllers();
