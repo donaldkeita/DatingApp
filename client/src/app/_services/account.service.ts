@@ -2,6 +2,7 @@ import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { BehaviorSubject, ReplaySubject } from 'rxjs';
 import { map } from 'rxjs/operators';
+import { environment } from 'src/environments/environment';
 import { User } from '../_models/user';
 
 // @Injectable - means this service can be injected into another component and/or another service
@@ -10,7 +11,7 @@ import { User } from '../_models/user';
 })
 export class AccountService {
 
-  baseUrl = 'https://localhost:5001/api/';
+  baseUrl = environment.apiUrl;
   // ReplaySubject - a type of observable. A kind of buffer object that stores values 
   //private currentUserSource = new ReplaySubject<User>(1);
   private currentUserSource = new BehaviorSubject<User | null>(null);
