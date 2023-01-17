@@ -23,11 +23,6 @@ export class HomeComponent implements OnInit {
     this.registerMode = !this.registerMode;
   }
 
-  // // getUsers - display the list of all users
-  // getUsers() {
-  //   this.http.get('https://localhost:5001/api/users').subscribe(users => this.users = users);
-  // }
-
   cancelRegisterMode(event: boolean) {
     this.registerMode = event;
   }

@@ -1,5 +1,7 @@
-import { Component, Input, OnInit } from '@angular/core';
+import { Component, Input, OnInit, ViewEncapsulation } from '@angular/core';
+import { Router } from '@angular/router';
 import { Member } from 'src/app/_models/member';
+import * as internal from 'stream';
 
 @Component({
   selector: 'app-member-card',
@@ -9,6 +11,7 @@ import { Member } from 'src/app/_models/member';
 export class MemberCardComponent implements OnInit {
   @Input() member: Member
 
+  
   constructor() { }
 
   ngOnInit(): void {
