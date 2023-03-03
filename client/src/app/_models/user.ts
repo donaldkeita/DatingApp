@@ -1,5 +1,5 @@
 // In angular, interface means something is type of something
 export interface User {
-    username : string;
+    userName : string;
     token : string;
 }

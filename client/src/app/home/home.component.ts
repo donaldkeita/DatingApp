@@ -12,7 +12,6 @@ export class HomeComponent implements OnInit {
   //users: any;
 
   constructor() { 
-
   }
 
   ngOnInit(): void {

@@ -22,7 +22,7 @@ export class AccountService {
   // next - with this method, you can pass new values. All the current subscribers will receive this.
   // @return — An Observable of the response, with the response body as a JSON object.
   login(model: any) {
-    return this.http.post(this.baseUrl + 'account/login', model).pipe(
+    return this.http.post<User>(this.baseUrl + 'account/login', model).pipe(
       map((response: User) => {
         const user = response;
         if (user) {
