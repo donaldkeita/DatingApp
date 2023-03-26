@@ -3,6 +3,7 @@ import { Injectable } from '@angular/core';
 import { map, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Member } from '../_models/member';
+import { Photo } from '../_models/photo';
 import { User } from '../_models/user';
 
 @Injectable({
@@ -41,6 +42,11 @@ export class MembersService {
       })
     )
   }
+
+
+  // addPhoto(photo : Photo) {
+  //   return this.http.post<Photo>(this.baseUrl + 'users/add-photo', photo)
+  // }
 
 
   //----------- private method -----------//
