@@ -23,7 +23,7 @@ export class PhotoEditorComponent implements OnInit {
 
   // photo : Photo;
 
-  constructor(private accountService : AccountService) { 
+  constructor(private accountService : AccountService, private memberService : MembersService) { 
     this.accountService.currentUser$.pipe(take(1)).subscribe({
       next : user => {
         if (user) this.user = user
@@ -66,12 +66,20 @@ export class PhotoEditorComponent implements OnInit {
   }
 
 
-  // addPhoto(photo : Photo) {
-  //   this.memberService.addPhoto(this.photo).subscribe({
-  //     next: (v) => {
-  //       this.router.navigateByUrl('/photo-editor');
-  //     }
-  //   })
-  // }
+  setMainPhoto(photo : Photo) {
+    this.memberService.setMainPhoto(photo.id).subscribe({
+      next: () => {
+        if (this.user && this.member) {
+          this.user.photoUrl = photo.url;
+          this.accountService.setCurrentUser(this.user);
+          this.member.photoUrl = photo.url;
+          this.member.photos.forEach(p => {
+            if (p.isMain) p.isMain = false;
+            if (p.id === photo.id) p.isMain = true;
+          })
+        }
+      }
+    });
+  }
 
 }

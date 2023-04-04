@@ -48,13 +48,4 @@ export class NavComponent implements OnInit {
   }
 
 
-  // !! - turns object into a boolean
-  // e.g: !!user - if user is null, that means it is false; otherwise it is true
-  // getCurrentUser() {
-  //   this.accountService.currentUser$.subscribe({
-  //     next: (v) => this.loggedIn = !!v,
-  //     error: (e) => console.error(e)
-  //   })
-  //  }
-
 }

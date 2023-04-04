@@ -44,9 +44,9 @@ export class MembersService {
   }
 
 
-  // addPhoto(photo : Photo) {
-  //   return this.http.post<Photo>(this.baseUrl + 'users/add-photo', photo)
-  // }
+  setMainPhoto(photoId : number) {
+    return this.http.put(this.baseUrl + 'users/set-main-photo/'+ photoId, {});
+  }
 
 
   //----------- private method -----------//
