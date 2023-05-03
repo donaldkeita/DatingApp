@@ -4,6 +4,7 @@ import { map, of } from 'rxjs';
 import { environment } from 'src/environments/environment';
 import { Member } from '../_models/member';
 import { PaginationResult } from '../_models/pagination';
+import { UserParams } from '../_models/userParams';
 
 
 @Injectable({
@@ -13,35 +14,19 @@ export class MembersService {
 
   baseUrl = environment.apiUrl;
   members : Member[] = [];
-  paginatedResult : PaginationResult<Member[]> = new PaginationResult<Member[]>();
 
 
   constructor(private http: HttpClient) { }
 
-  getMembers(page? : number, itemsPerPage? : number) {
-    // HttParams() : utility or class provided by angular that allows us to set
-    // query string parameters along with the HTTP request.
-    let params = new HttpParams();
-    
-    if (page && itemsPerPage) {
-      params = params.append('pageNumber', page);
-      params = params.append('pageSize', itemsPerPage);
-    }
+  getMembers(userParams : UserParams) {
+    let params = this.getPaginationHeaders(userParams.pageNumber, userParams.pageSize);
 
-    return this.http.get<Member[]>(this.baseUrl + 'users', {observe : 'response', params}).pipe(
-      map(response => {
-        if (response.body) {
-          this.paginatedResult.result = response.body;
-        }
-        const pagination = response.headers.get('Pagination');
-        if (pagination) {
-          this.paginatedResult.pagination = JSON.parse(pagination);
-        }
-        return this.paginatedResult;
-      })
-    )
+    params = params.append('minAge', userParams.minAge);
+    params = params.append('maxAge', userParams.maxAge);
+    params = params.append('gender', userParams.gender);
+
+    return this.getPaginatedResult<Member[]>(this.baseUrl + 'users', params)
   }
-
 
 
   getMember(username : string) {
@@ -49,6 +34,7 @@ export class MembersService {
     if (member) return of(member)
     return this.http.get<Member>(this.baseUrl + 'users/' + username);
   }
+
 
   updateMember(member : Member) {
     return this.http.put<Member>(this.baseUrl + 'users', member).pipe(
@@ -71,5 +57,34 @@ export class MembersService {
 
 
   //----------- private method -----------//
+
+  private getPaginationHeaders(pageNumber : number, pageSize : number) {
+    // HttParams() : utility or class provided by angular that allows us to set
+    // query string parameters along with the HTTP request.
+    let params = new HttpParams();
+    
+    params = params.append('pageNumber', pageNumber);
+    params = params.append('pageSize', pageSize);
+
+    return params;
+  }
+
+
+  private getPaginatedResult<T>(url : string, params: HttpParams) {
+    const paginatedResult : PaginationResult<T> = new PaginationResult<T>();
+
+    return this.http.get<T>(url, { observe: 'response', params }).pipe(
+      map(response => {
+        if (response.body) {
+          paginatedResult.result = response.body;
+        }
+        const pagination = response.headers.get('Pagination');
+        if (pagination) {
+          paginatedResult.pagination = JSON.parse(pagination);
+        }
+        return paginatedResult;
+      })
+    );
+  }
 
 }
