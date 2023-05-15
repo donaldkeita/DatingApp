@@ -22,8 +22,8 @@ namespace API.Services
             // claims
             var claims = new List<Claim>
             {
-                // each claim contains the id & username
-                new Claim(JwtRegisteredClaimNames.NameId, user.UserName)
+                new Claim(JwtRegisteredClaimNames.NameId, user.Id.ToString()),
+                new Claim(JwtRegisteredClaimNames.UniqueName, user.UserName),
             };
 
             // credentials
