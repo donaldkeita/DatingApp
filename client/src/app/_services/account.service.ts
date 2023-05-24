@@ -31,6 +31,7 @@ export class AccountService {
       })
     )
   }
+  
 
   // setCurrentUser -  Helper function
   setCurrentUser(user: User) {
